@@ -19,9 +19,13 @@ namespace EmployeeManagement.Controllers
         }
 
         // Retrieve employee name and return
-        public string Index()
+        public ViewResult Index()
         {
-            return _employeeRepository.GetEmployee(1).Email;
+            // retrieve all the employees
+            var model = _employeeRepository.GetAllEmployees();
+            // Pass the list of employees to the view
+            return View(model);
+
         }
 
         public ViewResult Details(int empNum=1)
@@ -29,7 +33,7 @@ namespace EmployeeManagement.Controllers
             // Instantiate HomeDetailsViewModel and store Employee details and PageTitle
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
             {
-                Employee = _employeeRepository.GetEmployee(empNum),
+                employee = _employeeRepository.GetEmployee(empNum),
                 PageTitle = "Employee Details"
             };
 
