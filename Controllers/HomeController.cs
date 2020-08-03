@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EmployeeManagement.Models;
+using EmployeeManagement.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagement.Controllers
@@ -23,12 +24,17 @@ namespace EmployeeManagement.Controllers
             return _employeeRepository.GetEmployee(1).Email;
         }
 
-        public ViewResult Details()
+        public ViewResult Details(int empNum=1)
         {
-            Employee model = _employeeRepository.GetEmployee(1);
-            ViewData["PageTitle"] = "Employee Details";
-            ViewData["Employee"] = model;
-            return View();
+            // Instantiate HomeDetailsViewModel and store Employee details and PageTitle
+            HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
+            {
+                Employee = _employeeRepository.GetEmployee(empNum),
+                PageTitle = "Employee Details"
+            };
+
+            // Pass the ViewModel object to the View() helper method
+            return View(homeDetailsViewModel);
         }
 
     }
