@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagement.Controllers
 {
+    [Route("[controller]/[action]")]
     public class HomeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
@@ -19,6 +20,8 @@ namespace EmployeeManagement.Controllers
         }
 
         // Retrieve employee name and return
+        [Route("/")]
+        [Route("")]
         public ViewResult Index()
         {
             // retrieve all the employees
@@ -28,12 +31,13 @@ namespace EmployeeManagement.Controllers
 
         }
 
-        public ViewResult Details(int empNum=1)
+        [Route("{id?}")]
+        public ViewResult Details(int? id)
         {
             // Instantiate HomeDetailsViewModel and store Employee details and PageTitle
             HomeDetailsViewModel homeDetailsViewModel = new HomeDetailsViewModel()
             {
-                employee = _employeeRepository.GetEmployee(empNum),
+                employee = _employeeRepository.GetEmployee(id ?? 1),
                 PageTitle = "Employee Details"
             };
 
